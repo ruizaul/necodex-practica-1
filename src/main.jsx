@@ -1,10 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./styles.css";
-import { Fpage } from "./FrontPage";
+import { Fpage } from "./App";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <Fpage />
-  </React.StrictMode>
-);
+ReactDOM.createRoot(document.getElementById("root")).render(<Fpage />);

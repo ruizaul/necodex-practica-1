@@ -14,6 +14,7 @@ export const GlobalFilter = ({
   }, 200);
 
   return (
+    /* Searchbar funcion */
     <label className="flex gap-x-2 items-baseline">
       <span className="text-gray-700">Buscar: </span>
       <input

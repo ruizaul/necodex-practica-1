@@ -38,6 +38,7 @@ export const Table = ({ columns, data }) => {
 
   return (
     <>
+      {/* SearchBar */}
       <div className="flex gap-x-2">
         <GlobalFilter
           preGlobalFilteredRows={preGlobalFilteredRows}
@@ -46,6 +47,7 @@ export const Table = ({ columns, data }) => {
         />
       </div>
 
+      {/* Columns & Rows */}
       <div className="mt-2 flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-auto lg:-mx-0">
           <div className="py-2 align-middle inline-block min-w-full sm:px-0 lg:px-8">
@@ -54,7 +56,7 @@ export const Table = ({ columns, data }) => {
                 {...getTableProps()}
                 className="min-w-full divide-y divide-gray-300"
               >
-                <thead className="bg-gray-50">
+                <thead className=" bg-gray-50">
                   {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                       {headerGroup.headers.map((column) => (
@@ -83,7 +85,7 @@ export const Table = ({ columns, data }) => {
                           return (
                             <td
                               {...cell.getCellProps()}
-                              className="px-6 py-4 whitespace-nowrap"
+                              className="px-6 py-5 whitespace-nowrap"
                             >
                               {cell.render("Cell")}
                             </td>
@@ -99,6 +101,7 @@ export const Table = ({ columns, data }) => {
         </div>
       </div>
 
+      {/* Pagination */}
       <div className="py-3 flex items-center justify-between">
         <div className="flex-1 flex justify-between sm:hidden">
           <Button onClick={() => previousPage()} disabled={!canPreviousPage}>
