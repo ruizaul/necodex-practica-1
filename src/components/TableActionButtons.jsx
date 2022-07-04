@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getDesactivar } from "../fetchs/getDesactivar";
 import Swal from "sweetalert2";
 
-export const TableActionButtons = ({ value, status, data, setRefresh }) => {
+export const TableActionButtons = ({ value, status, data }) => {
   let navigate = useNavigate();
 
   return (

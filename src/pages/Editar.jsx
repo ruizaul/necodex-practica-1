@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getHorario } from "../fetchs/getHorario";
+import Swal from "sweetalert2";
 import moment from "moment";
 
 export const Editar = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
+
   const URL = `https://back-practica-necodex.herokuapp.com/api/practicantes/${state.uid}`;
 
   const parseDate = moment(state.nacimiento).utc().format("YYYY-MM-DD");
@@ -37,7 +39,7 @@ export const Editar = () => {
         genero: data.genero,
         correo: data.correo,
         nacimiento: data.nacimiento,
-        telefono: Number(data.telefono),
+        telefono: data.telefono,
         clabe: data.clabe,
         horario: data.horario,
       })
@@ -116,7 +118,6 @@ export const Editar = () => {
                 {"📜 Nombre(s)"}
               </label>
               <input
-                required
                 onChange={(e) => handle(e)}
                 type="text"
                 id="nombre"
@@ -134,7 +135,6 @@ export const Editar = () => {
                 📜 Apellidos
               </label>
               <input
-                required
                 onChange={(e) => handle(e)}
                 type="text"
                 id="apellidos"
@@ -198,12 +198,11 @@ export const Editar = () => {
                 🍰 Fecha de nacimiento
               </label>
               <input
-                required
                 onChange={(e) => handle(e)}
                 value={data.nacimiento}
                 type="date"
                 id="nacimiento"
-                className="w-full rounded-md border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium placeholder-gray-400 text-teal-600"
+                className="w-full rounded-md border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium placeholder-gray-400 text-gray-400"
               />
             </div>
 
@@ -216,7 +215,6 @@ export const Editar = () => {
                 Correo Electrónico
               </label>
               <input
-                required
                 onChange={(e) => handle(e)}
                 type="email"
                 id="correo"
@@ -237,6 +235,7 @@ export const Editar = () => {
                 required
                 onChange={(e) => handle(e)}
                 type="number"
+                min="0"
                 id="telefono"
                 placeholder={data.telefono}
                 className="w-full rounded-md border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium placeholder-gray-400 text-teal-600"
@@ -249,7 +248,7 @@ export const Editar = () => {
                 htmlFor="clabe"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                🏧 CLABE interbancaria
+                🏧 CLABE interbancaria *Opcional
               </label>
               <input
                 onChange={(e) => handle(e)}
@@ -269,11 +268,11 @@ export const Editar = () => {
                 🕧 Preferencia de horario
               </label>
               <select
+                value={data.horario._id}
                 onChange={(e) => handle(e)}
                 id="horario"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#6A64F1] focus:border-[#6A64F1] block w-full p-2.5 dark:bg-gray-200 dark:border-gray-300 dark:placeholder-gray-400 dark:text-gray-500 dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
-                <option disabled>Selecciona tu horario</option>
                 {horario.map((element) => {
                   return (
                     <option key={element._id} value={element._id}>

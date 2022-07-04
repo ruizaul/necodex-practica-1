@@ -34,7 +34,7 @@ export const Agregar = () => {
         genero: data.genero,
         correo: data.correo,
         nacimiento: data.nacimiento,
-        telefono: Number(data.telefono),
+        telefono: data.telefono,
         clabe: data.clabe,
         horario: data.horario,
       })
@@ -206,7 +206,7 @@ export const Agregar = () => {
                 type="date"
                 id="nacimiento"
                 value={data.nacimiento}
-                className="w-full rounded-md border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium placeholder-gray-400 text-teal-600"
+                className="w-full rounded-md border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium placeholder-gray-400 text-gray-400"
               />
             </div>
 
@@ -224,7 +224,7 @@ export const Agregar = () => {
                 type="email"
                 id="correo"
                 value={data.correo}
-                placeholder="asd@necodex.com"
+                placeholder="correo@necodex.com"
                 className="w-full rounded-md border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium placeholder-gray-400 text-teal-600"
               />
             </div>
@@ -242,8 +242,9 @@ export const Agregar = () => {
                 onChange={(e) => handle(e)}
                 type="number"
                 id="telefono"
+                maxlength="10"
                 value={data.telefono}
-                placeholder="662 1231212"
+                placeholder="6621641978"
                 className="w-full rounded-md border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium placeholder-gray-400 text-teal-600"
               />
             </div>

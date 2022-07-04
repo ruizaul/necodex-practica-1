@@ -334,7 +334,7 @@ export const Detalles = () => {
                 type="text"
                 id="clabe"
                 value={data.clabe}
-                placeholder="0123456789..."
+                placeholder={data.clabe}
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               />
             </div>
@@ -355,13 +355,6 @@ export const Detalles = () => {
               >
                 <option disabled>Selecciona tu horario</option>
                 <option>{`${state.horario.entrada} - ${state.horario.salida} `}</option>
-                {/* {horario.map((element) => {
-                  return (
-                    <option key={element._id} value={element._id}>
-                      {`${element.entrada} - ${element.salida} `}
-                    </option>
-                  );
-                })} */}
               </select>
             </div>
 
