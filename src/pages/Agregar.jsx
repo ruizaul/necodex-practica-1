@@ -1,8 +1,74 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { getHorario } from "../fetchs/getHorario";
+import Swal from "sweetalert2";
 
 export const Agregar = () => {
   const navigate = useNavigate();
+  const URL = "https://back-practica-necodex.herokuapp.com/api/practicantes/";
+
+  const [data, setData] = useState({
+    nombre: "",
+    apellidos: "",
+    genero: "",
+    correo: "",
+    nacimiento: "",
+    telefono: "",
+    clabe: "",
+    horario: "",
+  });
+
+  const [horario, setHorario] = useState([]);
+
+  useEffect(() => {
+    getHorario(setHorario);
+  }, []);
+
+  function submit(e) {
+    e.preventDefault();
+    axios
+      .post(URL, {
+        nombre: data.nombre,
+        apellidos: data.apellidos,
+        genero: data.genero,
+        correo: data.correo,
+        nacimiento: data.nacimiento,
+        telefono: Number(data.telefono),
+        clabe: data.clabe,
+        horario: data.horario,
+      })
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Practicante creado exitosamente!",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          navigate("/");
+        });
+      })
+      .catch((error) => {
+        const errors = error.response.data.errors[0].msg;
+        console.log(errors);
+        Swal.fire({
+          position: "bottom-end",
+          icon: "error",
+          title: "Error: ",
+          text: `${errors}`,
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      });
+  }
+
+  function handle(e) {
+    const newdata = { ...data };
+    newdata[e.target.id] = e.target.value;
+    setData(newdata);
+    console.log(newdata);
+  }
 
   return (
     <>
@@ -37,7 +103,11 @@ export const Agregar = () => {
       {/* Form */}
       <div className="flex items-center justify-center my-20 ">
         <div className="mx-auto w-full max-w-[400px] px-8 py-8 bg-slate-100 rounded-lg">
-          <form action="" method="POST">
+          <form
+            onSubmit={(e) => {
+              submit(e);
+            }}
+          >
             {/* Nombres */}
             <div className="mb-5">
               <label
@@ -47,15 +117,17 @@ export const Agregar = () => {
                 {"📜 Nombre(s)"}
               </label>
               <input
+                required
+                onChange={(e) => handle(e)}
                 type="text"
-                name="name"
-                id="name"
+                id="nombre"
+                value={data.nombre}
                 placeholder="Nombre(s)"
-                className="w-full rounded-md border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                className="w-full rounded-md border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium placeholder-gray-400 text-teal-600"
               />
             </div>
 
-            {/* apellidos */}
+            {/* Apellidos */}
             <div className="mb-5">
               <label
                 htmlFor="surname"
@@ -64,11 +136,13 @@ export const Agregar = () => {
                 📜 Apellidos
               </label>
               <input
+                required
+                onChange={(e) => handle(e)}
                 type="text"
-                name="surname"
-                id="surname"
+                id="apellidos"
+                value={data.apellidos}
                 placeholder="Apellidos"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                className="w-full rounded-md border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium placeholder-gray-400 text-teal-600"
               />
             </div>
 
@@ -83,9 +157,12 @@ export const Agregar = () => {
 
               <div className="flex items-center mb-4 ml-6">
                 <input
+                  required
                   type="radio"
-                  value="male"
+                  id="genero"
+                  value={"H"}
                   name="gender"
+                  onChange={(e) => handle(e)}
                   className="w-4 h-4 text-[#1e847f] bg-gray-100 border-gray-300 focus:ring-[#1e847f] dark:focus:ring-[#1e847f] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 ></input>
                 <label
@@ -98,18 +175,39 @@ export const Agregar = () => {
 
               <div className="flex items-center mb-4 ml-6">
                 <input
+                  required
                   type="radio"
-                  value="women"
+                  id="genero"
+                  value={"M"}
                   name="gender"
+                  onChange={(e) => handle(e)}
                   className="w-4 h-4 text-[#1e847f] bg-gray-100 border-gray-300 focus:ring-[#1e847f] dark:focus:ring-[#1e847f] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 ></input>
                 <label
-                  htmlFor="default-radio-1"
+                  htmlFor="default-radio-2"
                   className="ml-2 text-sm font-medium text-gray-900 dark:text-[#6B7280]"
                 >
                   Mujer
                 </label>
               </div>
+            </div>
+
+            {/* Nacimiento */}
+            <div className="mb-5">
+              <label
+                htmlFor="datepicker"
+                className="mb-3 block text-base font-medium text-[#07074D]"
+              >
+                🍰 Fecha de nacimiento
+              </label>
+              <input
+                required
+                onChange={(e) => handle(e)}
+                type="date"
+                id="nacimiento"
+                value={data.nacimiento}
+                className="w-full rounded-md border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium placeholder-gray-400 text-teal-600"
+              />
             </div>
 
             {/* Correo Electronico */}
@@ -121,11 +219,13 @@ export const Agregar = () => {
                 Correo Electrónico
               </label>
               <input
+                required
+                onChange={(e) => handle(e)}
                 type="email"
-                name="email"
-                id="email"
-                placeholder="Ejemplo@dominio.com"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                id="correo"
+                value={data.correo}
+                placeholder="asd@necodex.com"
+                className="w-full rounded-md border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium placeholder-gray-400 text-teal-600"
               />
             </div>
 
@@ -138,11 +238,13 @@ export const Agregar = () => {
                 📞 Numero de teléfono
               </label>
               <input
-                type="text"
-                name="phone"
-                id="phone"
+                required
+                onChange={(e) => handle(e)}
+                type="number"
+                id="telefono"
+                value={data.telefono}
                 placeholder="662 1231212"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                className="w-full rounded-md border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium placeholder-gray-400 text-teal-600"
               />
             </div>
 
@@ -155,11 +257,12 @@ export const Agregar = () => {
                 🏧 CLABE interbancaria
               </label>
               <input
+                onChange={(e) => handle(e)}
                 type="text"
-                name="clabe"
                 id="clabe"
-                placeholder="0123456789..."
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                value={data.clabe}
+                placeholder="*Opcional"
+                className="w-full rounded-md border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium placeholder-gray-400 text-teal-600"
               />
             </div>
 
@@ -172,18 +275,29 @@ export const Agregar = () => {
                 🕧 Preferencia de horario
               </label>
               <select
-                id="schedule"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#6A64F1] focus:border-[#6A64F1] block w-full p-2.5 dark:bg-gray-200 dark:border-gray-300 dark:placeholder-gray-400 dark:text-gray-500 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
+                onChange={(e) => handle(e)}
+                id="horario"
+                defaultValue="Default"
+                className="w-full rounded-md border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-gray-400"
               >
-                <option defaultValue>Selecciona tu horario</option>
-                <option value="am">9am - 5pm</option>
-                <option value="pm">3pm - 11pm</option>
+                <option disabled value="Default">
+                  Selecciona tu horario
+                </option>
+                {horario.map((element) => {
+                  return (
+                    <option
+                      key={element._id}
+                      value={element._id}
+                    >{`${element.entrada} - ${element.salida} `}</option>
+                  );
+                })}
               </select>
             </div>
 
             {/* Submit Button*/}
             <div className="mt-8 mx-28 ">
-              <button className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none">
+              <button className="hover:shadow-form rounded-md bg-[#1e847f] py-3 px-8 text-base font-semibold text-white outline-none">
                 Crear
               </button>
             </div>

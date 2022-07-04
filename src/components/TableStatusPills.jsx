@@ -1,7 +1,7 @@
 import React from "react";
 import { classNames } from "../helpers/Utils";
 
-export const StatusPill = ({ value }) => {
+export const TableStatusPills = ({ value }) => {
   const status = value ? value.toLowerCase() : "unknown";
 
   return (

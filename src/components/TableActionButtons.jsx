@@ -1,7 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { getDesactivar } from "../fetchs/getDesactivar";
+import Swal from "sweetalert2";
 
-export const TableActionButtons = () => {
+export const TableActionButtons = ({ value, status, data, setRefresh }) => {
   let navigate = useNavigate();
 
   return (
@@ -11,7 +13,7 @@ export const TableActionButtons = () => {
         className="z-10 block p-4 text-green-700 transition-all bg-green-100 border-2 border-white rounded-full active:bg-green-50 hover:scale-110 "
         type="button"
         onClick={() => {
-          navigate("/detalles");
+          navigate("/detalles", { state: data });
         }}
       >
         <svg
@@ -32,7 +34,7 @@ export const TableActionButtons = () => {
         className="z-20 block p-4 text-blue-700 transition-all bg-blue-100 border-2 border-white rounded-full active:bg-blue-50 hover:scale-110 "
         type="button"
         onClick={() => {
-          navigate("/editar");
+          navigate("/editar", { state: data });
         }}
       >
         <svg
@@ -55,6 +57,31 @@ export const TableActionButtons = () => {
       <button
         className="z-30 block p-4 text-gray-900 transition-all bg-red-100 border-2 border-white rounded-full hover:scale-110  active:bg-red-50"
         type="button"
+        onClick={() => {
+          Swal.fire({
+            title: "Estas seguro?",
+            text: "Se cambiara el estado de este practicante.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#1e847f",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, cambiar estado!",
+            cancelButtonText: "Cancelar",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              getDesactivar(value, status);
+              Swal.fire({
+                icon: "success",
+                showConfirmButton: false,
+                title: "Listo!",
+                text: "El estado del practicante ha cambiado",
+              });
+              setTimeout(() => {
+                navigate(0);
+              }, 1200);
+            }
+          });
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

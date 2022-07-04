@@ -2,12 +2,7 @@ import React from "react";
 import { useAsyncDebounce } from "react-table";
 import "babel-polyfill";
 
-export const GlobalFilter = ({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
-}) => {
-  const count = preGlobalFilteredRows.length;
+export const GlobalFilter = ({ globalFilter, setGlobalFilter, total }) => {
   const [value, setValue] = React.useState(globalFilter);
   const onChange = useAsyncDebounce((value) => {
     setGlobalFilter(value || undefined);
@@ -25,7 +20,7 @@ export const GlobalFilter = ({
           setValue(e.target.value);
           onChange(e.target.value);
         }}
-        placeholder={`${count} practicantes...`}
+        placeholder={`${total} practicantes...`}
       />
     </label>
   );
