@@ -41,7 +41,7 @@ export const Agregar = () => {
       .then(() => {
         Swal.fire({
           position: "top-end",
-          allowOutsideClick: false,
+
           icon: "success",
           title: "Practicante creado exitosamente!",
           showConfirmButton: false,
@@ -55,6 +55,7 @@ export const Agregar = () => {
         console.log(errors);
         Swal.fire({
           position: "bottom-end",
+          allowOutsideClick: false,
           icon: "error",
           title: "Error: ",
           text: `${errors}`,

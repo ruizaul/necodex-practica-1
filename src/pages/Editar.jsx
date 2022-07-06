@@ -46,7 +46,6 @@ export const Editar = () => {
       .then(() => {
         Swal.fire({
           position: "top-end",
-          allowOutsideClick: false,
           icon: "success",
           title: "Practicante creado exitosamente!",
           showConfirmButton: false,
@@ -59,6 +58,7 @@ export const Editar = () => {
         const errors = error.response.data.errors[0].msg;
         console.log(errors);
         Swal.fire({
+          allowOutsideClick: false,
           position: "bottom-end",
           icon: "error",
           title: "Error: ",

@@ -67,11 +67,11 @@ export const TableActionButtons = ({ value, status, data }) => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Si, cambiar estado!",
             cancelButtonText: "Cancelar",
-            allowOutsideClick: false,
           }).then((result) => {
             if (result.isConfirmed) {
               getDesactivar(value, status);
               Swal.fire({
+                allowOutsideClick: false,
                 icon: "success",
                 showConfirmButton: false,
                 title: "Listo!",
