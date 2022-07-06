@@ -233,7 +233,6 @@ export const Editar = () => {
                 📞 Numero de teléfono
               </label>
               <input
-                required
                 onChange={(e) => handle(e)}
                 type="number"
                 min="0"
