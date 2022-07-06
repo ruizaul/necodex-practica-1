@@ -1,15 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAsyncDebounce } from "react-table";
 import "babel-polyfill";
 
 export const GlobalFilter = ({ globalFilter, setGlobalFilter, total }) => {
-  const [value, setValue] = React.useState(globalFilter);
+  const [value, setValue] = useState(globalFilter);
   const onChange = useAsyncDebounce((value) => {
     setGlobalFilter(value || undefined);
   }, 200);
 
   return (
-    /* Searchbar funcion */
     <label className="flex gap-x-2 items-baseline">
       <span className="text-gray-700">Buscar: </span>
       <input

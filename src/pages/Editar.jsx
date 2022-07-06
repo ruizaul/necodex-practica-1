@@ -45,9 +45,10 @@ export const Editar = () => {
       })
       .then(() => {
         Swal.fire({
+          allowOutsideClick: false,
           position: "top-end",
           icon: "success",
-          title: "Practicante creado exitosamente!",
+          title: "Practicante editado exitosamente!",
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {

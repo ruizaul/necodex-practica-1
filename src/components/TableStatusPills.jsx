@@ -5,7 +5,6 @@ export const TableStatusPills = ({ value }) => {
   const status = value ? value.toLowerCase() : "unknown";
 
   return (
-    /*  Pilas de activo e inactivo */
     <span
       className={classNames(
         "px-5 py-1 uppercase leading-wide font-bold text-xs rounded-full shadow-sm",
