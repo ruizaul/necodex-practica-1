@@ -25,12 +25,11 @@ export const CreateTable = () => {
         setTotalPages(Math.floor(res.data.total / limit) + 1);
         setData(res.data.practicantes, []);
       });
-    [limit, skip];
   };
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [limit, skip]);
 
   console.log(data);
 

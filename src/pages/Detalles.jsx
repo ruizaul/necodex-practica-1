@@ -17,6 +17,7 @@ export const Detalles = () => {
   const parseDate = moment(state.nacimiento).utc().format("YYYY-MM-DD");
 
   const data = {
+    uid: value,
     nombre: state.nombre,
     apellidos: state.apellidos,
     genero: state.genero,
