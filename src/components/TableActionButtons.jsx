@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getDesactivar } from "../fetchs/getDesactivar";
 import Swal from "sweetalert2";
 
-export const TableActionButtons = ({ value, status, data }) => {
+export const TableActionButtons = ({ value, status, data, getData }) => {
   let navigate = useNavigate();
 
   return (
@@ -13,7 +13,7 @@ export const TableActionButtons = ({ value, status, data }) => {
         className="z-10 block p-4 text-green-700 transition-all bg-green-100 border-2 border-white rounded-full active:bg-green-50 hover:scale-110 "
         type="button"
         onClick={() => {
-          navigate("/detalles", { state: data });
+          navigate("/detalles", { state: data }, { state2: getData });
         }}
       >
         <svg
@@ -69,17 +69,16 @@ export const TableActionButtons = ({ value, status, data }) => {
             cancelButtonText: "Cancelar",
           }).then((result) => {
             if (result.isConfirmed) {
-              getDesactivar(value, status);
+              getDesactivar(value, status, getData);
               Swal.fire({
-                allowOutsideClick: false,
+                position: "top-end",
                 icon: "success",
                 showConfirmButton: false,
+                allowOutsideClick: false,
                 title: "Listo!",
                 text: "El estado del practicante ha cambiado",
+                timer: 1200,
               });
-              setTimeout(() => {
-                navigate(0);
-              }, 1200);
             }
           });
         }}

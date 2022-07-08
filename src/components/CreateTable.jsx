@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { useTable, useGlobalFilter, usePagination } from "react-table";
 import { GlobalFilter } from "./TableSearch";
@@ -15,7 +15,7 @@ export const CreateTable = () => {
   const [total, setTotal] = useState();
   const [data, setData] = useState([]);
 
-  const getData = useCallback(async () => {
+  const getData = async () => {
     await axios
       .get("https://back-practica-necodex.herokuapp.com/api/practicantes", {
         params: { limit, skip },
@@ -25,11 +25,14 @@ export const CreateTable = () => {
         setTotalPages(Math.floor(res.data.total / limit) + 1);
         setData(res.data.practicantes, []);
       });
-  }, [limit, skip]);
+    [limit, skip];
+  };
 
   useEffect(() => {
     getData();
-  }, [getData]);
+  }, []);
+
+  console.log(data);
 
   const newnextPage = () => {
     setPage(actualPage + 1);
@@ -65,6 +68,7 @@ export const CreateTable = () => {
               value={e.value}
               data={e.cell.row.original}
               status={e.cell.row.values.status}
+              getData={getData}
             ></TableActionButtons>
           );
         },
@@ -98,7 +102,7 @@ export const CreateTable = () => {
         </h1>
       </>
     );
-  } else if (data.length > 0 || refresh === true) {
+  } else {
     return (
       <>
         <div className="grid content-center ">

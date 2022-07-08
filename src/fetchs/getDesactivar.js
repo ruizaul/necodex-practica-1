@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const getDesactivar = async (value, status) => {
+export const getDesactivar = async (value, status, getData) => {
   const stat = status === "activo" ? "inactivo" : "activo";
 
   await axios
@@ -10,7 +10,7 @@ export const getDesactivar = async (value, status) => {
         status: stat,
       }
     )
-    .then((response) => {
-      return console.log(response.data.practicante.status);
+    .then(() => {
+      return getData();
     });
 };
